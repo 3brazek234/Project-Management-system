@@ -19,7 +19,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "dist/index.js" // أو server.js
+      "dest": "dist/index.js" 
     }
   ]
 }
