@@ -1,0 +1,40 @@
+# D:\E-com\docker-compose.yml
+version: '3.8'
+
+services:
+  # خدمة قاعدة البيانات PostgreSQL
+  db:
+    image: postgres:15-alpine # استخدم إصدار PostgreSQL مستقر، Alpine خفيف
+    restart: always           # لو الكونتينر وقع، يعيد تشغيل نفسه
+    ports:
+      - "5432:5432"           # ربط Port 5432 اللي جوه الكونتينر بـ Port 5432 على جهازك
+    environment:
+      POSTGRES_DB: your_database_name # اسم الداتابيز اللي هتتنشئ
+      POSTGRES_USER: your_username    # اسم المستخدم بتاع الداتابيز
+      POSTGRES_PASSWORD: your_password # كلمة السر بتاع الداتابيز (غيرها بقوة!)
+    volumes:
+      - db_data:/var/lib/postgresql/data # تخزين داتا الداتابيز في Docker volume
+      # ده مهم عشان الداتا متتمسحش لو الكونتينر اتمسح أو اتعاد بناءه
+    healthcheck: # للتحقق من صحة الداتابيز
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # خدمة الـ Backend بتاعك (مثلاً Node.js/Express)
+  # (دي مجرد فكرة عشان تشوف التكامل)
+  # backend:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.backend # لو عندك Dockerfile منفصل للـ backend
+  #   ports:
+  #     - "3000:3000" # أو أي port بيشتغل عليه الـ backend
+  #   environment:
+  #     DATABASE_URL: postgres://your_username:your_password@db:5432/your_database_name # لاحظ إن الهوست هنا هو اسم خدمة الداتابيز "db"
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy # يتأكد إن الداتابيز جاهزة قبل ما يشغل الـ backend
+
+# تعريف الـ Volumes
+volumes:
+  db_data: {}

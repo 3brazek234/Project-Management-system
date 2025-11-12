@@ -1,0 +1,23 @@
+# .dockerignore
+
+# استبعد مجلد node_modules من النسخ
+node_modules/
+
+# استبعد مجلدات وملفات Git
+.git/
+.gitignore
+
+# استبعد ملفات الـ .env (يفضل تمرير الـ env vars عن طريق Docker Compose أو Secrets)
+.env
+
+# استبعد مجلدات وأدوات التطوير
+.vscode/
+# لو عندك مجلدات build أو dist أو out
+build/
+dist/
+out/
+
+# ملفات الـ logs
+*.log
+npm-debug.log*
+yarn-debug.log*
