@@ -2,17 +2,24 @@
   "version": 2,
   "builds": [
     {
-      "src": "index.js",
+      "src": "dist/index.js", 
       "use": "@vercel/node",
       "config": {
-        "includeFiles": ["dist/**"]
+        "includeFiles": [
+          "dist/**",
+          "package.json",
+          "node_modules/@prisma/**", 
+          "node_modules/inngest/**", 
+          "node_modules/@neondatabase/**",
+          "node_modules/ws/**" 
+        ]
       }
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "server.js"
+      "dest": "dist/index.js" // أو server.js
     }
   ]
 }
