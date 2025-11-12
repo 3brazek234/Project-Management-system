@@ -8,13 +8,6 @@ import { inngest, functions } from "./inngest/inngest.js"; // 🚨🚨 أضف .j
 const app = express();
 app.use(cors());
 app.use(express.json());
-
-app.use("/api/auth-protected", clerkMiddleware(), (req, res) => {
-  res.json({ message: "Authenticated user data", userId: req.auth?.userId });
-});
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
 app.use("/api/inngest", serve({ client: inngest, functions }));
 
 const PORT = process.env.PORT || 3000;
