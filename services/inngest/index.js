@@ -4,8 +4,6 @@ import prisma from "../config/prisma";
 // Create a client to send and receive events
 export const inngest = new Inngest({
   id: "PGM",
-  eventKey: process.env.INNGEST_EVENT_KEY,
-  signingKey: process.env.INNGEST_SIGNING_KEY,
 });
 const syncUserCreation = inngest.createFunction(
   { id: "sync-user-from-clerk" },
